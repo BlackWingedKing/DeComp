@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { create, IPFSHTTPClient } from "ipfs-http-client";
+import { create } from "ipfs-http-client";
 
 async function uploadFileToIPFS(data) {
   const url = "/ip4/127.0.0.1/tcp/5002/http";
@@ -9,10 +9,12 @@ async function uploadFileToIPFS(data) {
 }
 
 export const Uploading = ({ addMethod }) => {
+  const [fileName, setFileName] = useState();
   const [fileHash, setFileHash] = useState();
 
   const selectedFileHandler = async (e) => {
     const file = e?.target?.files[0];
+    setFileName(file.name);
     const hash = await uploadFileToIPFS(file);
     console.log({ hash });
     setFileHash(hash);
@@ -31,7 +33,7 @@ export const Uploading = ({ addMethod }) => {
         />
         <input
           type="button"
-          value="Select File"
+          value={fileName ? fileName : "Select File"}
           className="cursor-pointer	p-4 border-solid border-2 border-black w-64 rounded-lg mt-10 font-medium"
           onClick={() => document.getElementById("myFile")?.click()}
         />
