@@ -1,0 +1,36 @@
+{
+  "name": "snarkyjs-workshop",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "exec": "tsc && node dist/smart_contract.js",
+    "helloworld": "npx tsc && node dist/hello_world.js",
+    "run1": "npx tsc && node dist/1_exercise.js",
+    "run2": "npx tsc && node dist/2_exercise.js",
+    "run3": "npx tsc && node dist/3_exercise.js",
+    "run4": "npx tsc && node dist/4_exercise.js",
+    "run5": "npx tsc && node dist/5_exercise.js",
+    "bonus": "npx tsc && node dist/bonus.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/o1-labs/snarkyjs-workshop.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/o1-labs/snarkyjs-workshop/issues"
+  },
+  "engines": {
+    "node": ">=16.4.0"
+  },
+  "homepage": "https://github.com/o1-labs/snarkyjs-workshop#readme",
+  "dependencies": {
+    "prettier": "^2.5.0",
+    "snarkyjs": "^0.1.11",
+    "typescript": "^4.5.2"
+  }
+}
