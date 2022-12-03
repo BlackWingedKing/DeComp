@@ -10,8 +10,7 @@ function generateProof(input, F, Main, kp) {
     let x = input;
     let y = F(x);
     const proof = Main.prove([Field(y)], [Field(x)], kp);
-    let vk = kp.verificationKey();
     return {
-        vk, proof, output: y
+        proof, output: y
     };
 }
