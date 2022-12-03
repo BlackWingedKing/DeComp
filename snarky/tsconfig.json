@@ -4,10 +4,12 @@
     "module": "esnext",
     "outDir": "dist",
     "target": "ES2020",
-    "strict": true,
+    "strict": false,
     "moduleResolution": "node",
     "skipLibCheck": true,
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "emitDecoratorMetadata": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
   }
 }
