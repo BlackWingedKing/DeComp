@@ -1,7 +1,4 @@
 import { create, IPFSHTTPClient } from 'ipfs-http-client'
-// @ts-ignore:
-import vm  from 'node:vm';
-import {writeFileSync} from 'fs';
 
 function createIPFSClient(url: string): IPFSHTTPClient {
     // client init

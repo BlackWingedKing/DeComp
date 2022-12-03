@@ -1,15 +1,17 @@
-import {fetchFileFromIPFS} from '../ipfs-client/ipfs-client.js'
-import { ipfsURL, fileHash } from '../constants/constants.js';
-import {methodNameMapping} from './method_maps.js';
+import {methodModMapping} from './method_maps.js';
+import { Field } from 'snarkyjs';
 
 export async function ExecuteJob(input: any, methodName: string) {
-    const fileHash = methodNameMapping[methodName];
-    console.log(fileHash, methodName);
-    const code = await fetchFileFromIPFS(ipfsURL, fileHash);
-    console.log(code);
-    // ts-ignore:
-    const mod = await import(`../saved_modules/${fileHash}.js`);
-    let {F, Main} = mod;
-    console.log("got F, main", F)
-    return; 
+    const {kp, F, Main} = methodModMapping[methodName]
+    return generateProof(input, F, Main, kp);
+}
+
+function generateProof(input, F, Main, kp) {
+    let x = input;
+    let y = F(x);
+    const proof = Main.prove([Field(y)], [Field(x)], kp);
+    let vk = kp.verificationKey();
+    return {
+        vk, proof, output: y
+    };
 }
