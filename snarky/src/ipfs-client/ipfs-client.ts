@@ -27,16 +27,3 @@ export async function uploadFileToIPFS(url: string, data: string) {
     const { cid } = await client.add(data);
     return cid;
 }
-
-
-// fetchFileFromIPFS(ipfsURL, fileHash).then(async (code) => {
-//     console.log(code);
-//     // evaluating the file
-//     // const executor = eval(data);
-//     // executor()
-//     writeFileSync(`./dist/saved_modules/${fileHash}.js`, code);
-//     // ts-ignore:
-//     const mod = await import(`../saved_modules/${fileHash}.js`);
-//     let {F, Main} = mod;
-//     console.log("got F, main", F) 
-// })
