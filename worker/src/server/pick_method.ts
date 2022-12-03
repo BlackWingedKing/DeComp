@@ -19,8 +19,6 @@ export async function pickMethod(name: string, hash: string) {
 
   fetchFileFromIPFS(ipfsURL, hash).then(async (code) => {
     writeFileSync(`./dist/saved_modules/${hash}.js`, code);
-    const mod = await import(`../saved_modules/${hash}.js`);
-    let { F, Main } = mod;
     await fillMaps(name);
   });
 }
