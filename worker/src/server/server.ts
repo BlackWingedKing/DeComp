@@ -1,9 +1,13 @@
 import express from 'express'
 import { ExecuteJob } from './execute_job.js'
 import { pickMethod } from './pick_method.js'
+import cors from 'cors';
 
 const app = express()
 app.use(express.json())
+app.use(cors({
+  origin: '*'
+}));
 
 const port = 3000
 
