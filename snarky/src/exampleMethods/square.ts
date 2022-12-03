@@ -1,6 +1,6 @@
 import {Field, Circuit, circuitMain, public_} from 'snarkyjs';
 
-class Main extends Circuit {
+export class Main extends Circuit {
     @circuitMain
     static main(w: Field, @public_ x: Field) {
         let result = x.square();
@@ -8,9 +8,9 @@ class Main extends Circuit {
     }
 }
   
-function F(x: number) {
+export function F(x: number) {
     return x*x;
 }
 
-// @ts-ignore:
-executor, main = F, Main;
+// // @ts-ignore:
+// executor, main = F, Main;
