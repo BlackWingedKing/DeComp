@@ -1,6 +1,6 @@
-import {fetchFileFromIPFS} from '../ipfs-client/ipfs-client'
-import { ipfsURL, fileHash } from '../constants/constants';
-import {methodNameMapping} from './method_maps';
+import {fetchFileFromIPFS} from '../ipfs-client/ipfs-client.js'
+import { ipfsURL, fileHash } from '../constants/constants.js';
+import {methodNameMapping} from './method_maps.js';
 
 export async function ExecuteJob(input: any, methodName: string) {
     const fileHash = methodNameMapping[methodName];
@@ -13,5 +13,3 @@ export async function ExecuteJob(input: any, methodName: string) {
     console.log("got F, main", F)
     return; 
 }
-
-module.exports = {ExecuteJob}
