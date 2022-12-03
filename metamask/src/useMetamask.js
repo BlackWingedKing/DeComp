@@ -83,7 +83,8 @@ export const useMetamask = () => {
     }
   };
 
-  const addMethod = (name, ipfsHash) => {
+  const addMethod = async (name, ipfsHash) => {
+    console.log("Adding ", name, " ", ipfsHash, "to contract");
     contract.addMethod(name, ipfsHash).then((txn) => {
       console.log(txn);
     });

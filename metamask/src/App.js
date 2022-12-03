@@ -3,8 +3,13 @@ import { useMetamask } from "./useMetamask";
 import Card from "./Card";
 
 function App() {
-  const { accountAddress, accountBalance, isConnected, connectWallet } =
-    useMetamask();
+  const {
+    accountAddress,
+    accountBalance,
+    isConnected,
+    connectWallet,
+    addMethod,
+  } = useMetamask();
 
   return (
     <div className="flex min-h-screen">
@@ -16,7 +21,7 @@ function App() {
             }
             balance={accountBalance}
           />
-          <Uploading />
+          <Uploading addMethod={addMethod} />
         </div>
       ) : (
         <div className="m-auto flex flex-col items-center">

@@ -1,11 +1,22 @@
 import React, { useState } from "react";
+import { create, IPFSHTTPClient } from "ipfs-http-client";
 
-export const Uploading = () => {
-  const [selectedFile, setSelectedFile] = useState();
+async function uploadFileToIPFS(data) {
+  const url = "/ip4/127.0.0.1/tcp/5002/http";
+  const client = create({ url });
+  const { cid } = await client.add(data);
+  return cid;
+}
 
-  const selectedFileHandler = (e) => {
-    // setSelectedFile(document.getElementById("myFile")?.files[0]);
-    setSelectedFile(e?.target?.files[0]);
+export const Uploading = ({ addMethod }) => {
+  const [fileHash, setFileHash] = useState();
+
+  const selectedFileHandler = async (e) => {
+    const file = e?.target?.files[0];
+    const hash = await uploadFileToIPFS(file);
+    console.log({ hash });
+    setFileHash(hash);
+    addMethod(file.name, hash);
   };
 
   return (
