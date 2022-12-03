@@ -1,6 +1,7 @@
 import express from 'express'
 import { ExecuteJob } from './execute_job.js'
-//const executeJob = require('./execute_job'); 
+import { pickMethod } from './pick_method.js'
+
 const app = express()
 app.use(express.json())
 
@@ -21,9 +22,10 @@ app.post('/run-job', async (req, res) => {
 });
 
 app.post('/pick-method', async (req, res) => {
-  console.log("run-job endpoint called");
+  console.log("pick-method endpoint called");
   const body = req.body;
-  console.log(body);
+  const {name, hash} = body;
+  await pickMethod(name, hash);
   res.send("ok")
 });
 
