@@ -8,10 +8,13 @@ import { ipfsURL } from "../constants/constants.js";
 import { fetchFileFromIPFS } from "../ipfs-client/ipfs-client.js";
 import { writeFileSync } from "fs";
 
+const contract = Contract();
+
 export async function pickMethod(name: string, hash: string) {
   // query the smart contract to get the result
-  // Contract.pickMethod();
-
+  const out = await contract.pickMethod(hash);
+  console.log("output:", out);
+  
   methodNameMapping[name] = hash;
 
   fetchFileFromIPFS(ipfsURL, hash).then(async (code) => {
