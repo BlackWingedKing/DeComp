@@ -1,11 +1,4 @@
-import {
-  Field,
-  Experimental,
-  isReady,
-  CircuitValue,
-  prop,
-  verify,
-} from "snarkyjs";
+import { Field, Experimental, isReady, CircuitValue, prop } from "snarkyjs";
 
 await isReady;
 
@@ -50,22 +43,9 @@ export const Program = Experimental.ZkProgram({
   },
 });
 
-export function F(x: number[][]) : number[][] {
-  return [[x[1][1], -x[0][1]], [-x[1][0], x[0][0]]];
+export function F(x: number[][]): number[][] {
+  return [
+    [x[1][1], -x[0][1]],
+    [-x[1][0], x[0][0]],
+  ];
 }
-
-// Compule the program.
-console.log("Compiling");
-const { verificationKey } = await Program.compile();
-
-// Create a proof.
-console.log("Creating a proof");
-const m1 = new Matrix(Field(1), Field(0), Field(0), Field(1));
-const m2 = new Matrix(Field(1), Field(0), Field(0), Field(1));
-const proof = await Program.verifyMatrix(m1, m2);
-
-// Verify the proof.
-console.log("Verifying....");
-let ok = await verify(proof.toJSON(), verificationKey);
-console.log(ok);
-

@@ -17,8 +17,10 @@ export async function pickMethod(name: string, hash: string) {
   
   methodNameMapping[name] = hash;
 
-  fetchFileFromIPFS(ipfsURL, hash).then(async (code) => {
-    writeFileSync(`./dist/saved_modules/${hash}.js`, code);
-    await fillMaps(name);
-  });
+  const code = await fetchFileFromIPFS(ipfsURL, hash);
+  console.log("fetched file from IPFS");
+  writeFileSync(`./dist/saved_modules/${hash}.js`, code);
+  console.log("wrote file to disk");
+  await fillMaps(name);
+  console.log("filled the maps");
 }

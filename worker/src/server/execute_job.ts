@@ -1,16 +1,21 @@
 import {methodModMapping} from './method_maps.js';
-import { Field } from 'snarkyjs';
+import { Field, VerificationKey, verify } from 'snarkyjs';
 
 export async function ExecuteJob(input: any, methodName: string) {
-    const {kp, F, Main} = methodModMapping[methodName]
-    return generateProof(input, F, Main, kp);
+    const {F, Matrix, vk, Program} = methodModMapping[methodName]
+    const val = await generateProof(input, F, Matrix, vk, Program);
+    return val;
 }
 
-function generateProof(input, F, Main, kp) {
+async function generateProof(input, F, Matrix, vk, Program) {
     let x = input;
     let y = F(x);
-    const proof = Main.prove([y[0][0], y[0][1], y[1][0], y[1][1]], [x[0][0], x[0][1], x[1][0], x[1][1]], kp);
+    const m1 = new Matrix(Field(x[0][0]), Field(x[0][1]), Field(x[1][0]), Field(x[1][1]));
+    const m2 = new Matrix(Field(y[0][0]), Field(y[0][1]), Field(y[1][0]), Field(y[1][1]));
+    const proof = await Program.verifyMatrix(m1, m2);
     return {
-        proof, output: y
-    };
+        proof: proof.toJSON(),
+        output: y,
+        vk
+    }
 }
