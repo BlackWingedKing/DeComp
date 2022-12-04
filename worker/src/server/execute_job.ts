@@ -4,6 +4,7 @@ import { Field, VerificationKey, verify } from 'snarkyjs';
 export async function ExecuteJob(input: any, methodName: string) {
     const {F, Matrix, vk, Program} = methodModMapping[methodName]
     const val = await generateProof(input, F, Matrix, vk, Program);
+    console.log("output: ", val.output, "generated proof")
     return val;
 }
 
