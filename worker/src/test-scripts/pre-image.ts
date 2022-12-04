@@ -1,4 +1,4 @@
-import { Poseidon, Field, Circuit, circuitMain, public_, isReady } from 'snarkyjs';
+import { Poseidon, Field, Circuit, circuitMain, public_, isReady, Proof } from 'snarkyjs';
 
 await isReady;
 
