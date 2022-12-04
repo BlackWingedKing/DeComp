@@ -8,6 +8,12 @@ app.use(express.json())
 app.use(cors({
   origin: '*'
 }));
+app.use(function(req, res, next) {
+  res.header("Cross-Origin-Embedder-Policy", "require-corp");
+  res.header("Cross-Origin-Opener-Policy", "same-origin");
+  res.header("Cross-Origin-Resource-Policy", "same-site");
+  next();
+});
 
 const port = 3000
 
