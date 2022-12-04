@@ -16,9 +16,10 @@ export const Uploading = ({ addMethod }) => {
     const file = e?.target?.files[0];
     setFileName(file.name);
     const hash = await uploadFileToIPFS(file);
-    console.log({ hash });
-    setFileHash(hash);
-    addMethod(file.name, hash);
+    if (hash) {
+      setFileHash(hash.toString());
+      addMethod(file.name, hash.toString());
+    }
   };
 
   return (
@@ -37,6 +38,14 @@ export const Uploading = ({ addMethod }) => {
           className="cursor-pointer	p-4 border-solid border-2 border-black w-64 rounded-lg mt-10 font-medium"
           onClick={() => document.getElementById("myFile")?.click()}
         />
+        {fileHash && (
+          <div class="flex items-center pt-4 text-base font-bold text-gray-900 rounded-lg">
+            <span class="flex-1 ml-3 whitespace-nowrap">IPFS Hash</span>
+            <span class="inline-flex items-center justify-center px-2 py-0.5 ml-3 text-xs font-medium text-gray-500 bg-gray-200 rounded dark:bg-gray-700 dark:text-gray-400">
+              {fileHash.slice(0, 10) + "..." + fileHash.slice(32, 42)}
+            </span>
+          </div>
+        )}
       </div>
     </div>
   );

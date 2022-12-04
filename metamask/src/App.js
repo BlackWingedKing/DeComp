@@ -4,19 +4,19 @@ import Card from "./Card";
 import RunJob from "./RunJob";
 
 function App() {
-  // const {
-  //   accountAddress,
-  //   accountBalance,
-  //   isConnected,
-  //   connectWallet,
-  //   addMethod,
-  // } = useMetamask();
+  const {
+    accountAddress,
+    accountBalance,
+    isConnected,
+    connectWallet,
+    addMethod,
+  } = useMetamask();
 
-  return <RunJob />;
+  // return <RunJob />;
 
   return (
     <div className="flex min-h-screen">
-      {/* {isConnected ? (
+      {isConnected ? (
         <div className="m-auto flex gap-8 items-center">
           <Card
             address={
@@ -35,7 +35,7 @@ function App() {
             Connect
           </button>
         </div>
-      )} */}
+      )}
     </div>
   );
 }
