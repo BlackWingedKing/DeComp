@@ -61,6 +61,9 @@ const RunJob = () => {
   const [output, setOutput] = useState([0, 0, 0, 0]);
   const [proof, setProof] = useState();
   const [vk, setVk] = useState();
+  const [isVerifying, setIsVerifying] = useState();
+  const [isComputing, setIsComputing] = useState();
+  const [isVerified, setIsVerified] = useState();
 
   const url = "http://192.168.173.161:3000/run-job";
 
@@ -69,6 +72,8 @@ const RunJob = () => {
       [Number(input[0]), Number(input[1])],
       [Number(input[2]), Number(input[3])],
     ];
+
+    setIsComputing(true);
     axios
       .post(
         url,
@@ -93,9 +98,12 @@ const RunJob = () => {
           output[1][0].toString(),
           output[1][1].toString(),
         ]);
+
+        setIsComputing(false);
         setProof(proof);
         setVk(vk);
 
+        setIsVerifying(true);
         const url2 = "http://192.168.173.161:3001/verify";
         axios
           .post(
@@ -107,13 +115,35 @@ const RunJob = () => {
               },
             }
           )
-          .then((res) => {
-            console.log(res);
+          .then(({ data }) => {
+            console.log(data.verified);
+            setIsVerifying(false);
+            setIsVerified(data.verified);
           });
       })
       .catch(function (error) {
         console.log(error);
       });
+  };
+
+  const getButtonContent = () => {
+    if (isComputing === true) return "Computing...";
+    else if (isVerifying === true) return "Verifying...";
+    else if (isVerified === true) return "Verification Successful";
+    else if (isVerified === false) return "Verification Failed";
+    else return "Compute";
+  };
+
+  const getButtonClass = () => {
+    if (isComputing === true)
+      return "bg-blue-400 border-transparent text-white";
+    else if (isVerifying === true)
+      return "bg-violet-400 border-transparent text-white";
+    else if (isVerified === true)
+      return "bg-green-400 border-transparent text-white";
+    else if (isVerified === false)
+      return "bg-red-400 border-transparent text-white";
+    else return "";
   };
 
   return (
@@ -125,10 +155,13 @@ const RunJob = () => {
           <Matrix values={output} setValues={setOutput} />
         </div>
         <button
-          className="cursor-pointer	p-4 border-solid border-black border-2 w-64 rounded-lg mt-36 font-medium text-xl"
+          className={
+            "cursor-pointer	p-4 border-solid border-black border-2 w-64 rounded-lg mt-36 font-medium text-xl " +
+            getButtonClass()
+          }
           onClick={submitInput}
         >
-          Compute
+          {getButtonContent()}
         </button>
       </div>
     </div>
