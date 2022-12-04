@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Proof, VerificationKey } from "snarkyjs";
+import { isReady, verify } from "snarkyjs";
 
 const Matrix = ({ values, setValues }) => {
   const handleChange = (e, idx) => {
@@ -60,6 +60,7 @@ const RunJob = () => {
   const [input, setInput] = useState([0, 0, 0, 0]);
   const [output, setOutput] = useState([0, 0, 0, 0]);
   const [proof, setProof] = useState();
+  const [vk, setVk] = useState();
 
   const url = "http://192.168.173.161:3000/run-job";
 
@@ -69,13 +70,23 @@ const RunJob = () => {
       [Number(input[2]), Number(input[3])],
     ];
     axios
-      .post(url, {
-        input: arr2d,
-        methodName: "matinv",
-      })
+      .post(
+        url,
+        {
+          input: arr2d,
+          methodName: "matinv",
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
       .then(function ({ data }) {
         const output = data.output;
         const proof = data.proof;
+        const vk = data.vk;
+
         setOutput([
           output[0][0].toString(),
           output[0][1].toString(),
@@ -83,17 +94,27 @@ const RunJob = () => {
           output[1][1].toString(),
         ]);
         setProof(proof);
-        console.log(data);
+        setVk(vk);
+
+        const url2 = "http://192.168.173.161:3001/verify";
+        axios
+          .post(
+            url2,
+            { vk, proof },
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          )
+          .then((res) => {
+            console.log(res);
+          });
       })
       .catch(function (error) {
         console.log(error);
       });
   };
-
-  useEffect(() => {
-    if (proof) {
-    }
-  }, [proof]);
 
   return (
     <div className="flex flex-col min-h-screen justify-center items-center pt-16">
